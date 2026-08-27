@@ -46,3 +46,4 @@ LiftFlux/
 
 - [Development workflow](CONTRIBUTING.md)
 - [MVP scope](docs/mvp-scope.md)
+- [Architecture drivers](docs/architecture-drivers.md)
