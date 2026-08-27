@@ -42,6 +42,7 @@ LiftFlux/
 └── infra/         # Configuración de infraestructura
 ```
 
-## Development workflow
+## Documentation
 
-Las normas de ramas, commits, Pull Requests, versionamiento, pruebas y publicaciones están documentadas en [CONTRIBUTING.md](CONTRIBUTING.md).
+- [Development workflow](CONTRIBUTING.md)
+- [MVP scope](docs/mvp-scope.md)
