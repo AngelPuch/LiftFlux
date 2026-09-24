@@ -8,8 +8,10 @@
 
 <!-- Check all that apply -->
 
-- [ ] 📱 Mobile (Flutter)
-- [ ] ⚙️ Backend / API
+- [ ] 📱 Android
+- [ ] 🪟 Administración Windows
+- [ ] ⚙️ Servicio de backend o contrato
+- [ ] 📄 Documentación o ADR
 - [ ] 🛠️ CI/CD & DevOps
 
 ## Validation
@@ -21,7 +23,7 @@
 
 ## UI Changes / Screenshots
 
-<!-- If this PR modifies the mobile app UI, add screenshots or GIFs here. If not, delete this section. -->
+<!-- Si cambias la interfaz Android o Windows, adjunta capturas cuando ayuden a revisarla. -->
 
 ## Checklist
 
@@ -35,4 +37,4 @@
 
 <!-- Use "Closes #123" when applicable. -->
 
-Closes #
+<!-- Closes #123, si aplica. -->

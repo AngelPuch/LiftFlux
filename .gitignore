@@ -1,30 +1,56 @@
-# Environment variables and secrets
+# Configuración local y secretos
 **/.env
 **/.env.*
 !**/.env.example
+!**/.env.*.example
+**/local.properties
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.mobileprovision
+*.key
 
-# Node.js / NestJS
+# Node.js y NestJS
 **/node_modules/
 **/dist/
 **/coverage/
+**/*.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Flutter / Dart
-**/.dart_tool/
-**/.flutter-plugins
-**/.flutter-plugins-dependencies
+# Gradle y Android
+/apps/mobile/
+**/.gradle/
+**/.kotlin/
 **/build/
+**/captures/
+**/.cxx/
+**/.externalNativeBuild/
+*.apk
+*.aab
+*.ap_
 
-# IDE
+# .NET y Windows
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+*.msix
+*.msixbundle
+*.appx
+*.appxbundle
+
+# Editores y sistema operativo
 .idea/
 .vscode/
 *.iml
-
-# Operating systems
 .DS_Store
 Thumbs.db
-
-# General logs
+*.swp
 *.log
+
+# Se versionan deliberadamente: package-lock.json, packages.lock.json,
+# gradlew, gradlew.bat, gradle/wrapper/* y migraciones Prisma.

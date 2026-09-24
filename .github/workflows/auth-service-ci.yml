@@ -1,0 +1,53 @@
+name: Auth service CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auth-service-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  auth-service:
+    name: Auth service
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: services/auth-service
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24.16.0"
+          cache: npm
+          cache-dependency-path: services/auth-service/package-lock.json
+
+      - name: Show runtime versions
+        run: |
+          node --version
+          npm --version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test -- --runInBand
+
+      - name: Build API
+        run: npm run build
