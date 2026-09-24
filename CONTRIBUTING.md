@@ -42,7 +42,7 @@ cd apps/android
 .\gradlew.bat lintDebug testDebugUnitTest assembleDebug
 ```
 
-El wrapper Gradle se versiona. La CI usa Android SDK 37 y Java 25 conforme al proyecto generado. Agrega pruebas instrumentadas de persistencia y UI cuando existan reglas y pantallas reales; las pruebas de plantilla no demuestran recuperación del entrenamiento.
+El wrapper Gradle se versiona. La CI usa Android SDK 36 y Java 25 conforme al proyecto. Agrega pruebas instrumentadas de persistencia y UI cuando existan reglas y pantallas reales; las pruebas de plantilla no demuestran recuperación del entrenamiento.
 
 ### Administración Windows
 

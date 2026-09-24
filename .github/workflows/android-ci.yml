@@ -30,7 +30,7 @@ jobs:
           java-version: "25"
       - uses: android-actions/setup-android@v4
       - name: Install Android platform
-        run: sdkmanager "platforms;android-37"
+        run: sdkmanager "platforms;android-36"
       - uses: gradle/actions/setup-gradle@v4
       - name: Validate Android
         run: bash ./gradlew --no-daemon lintDebug testDebugUnitTest assembleDebug
