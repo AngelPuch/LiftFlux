@@ -1,0 +1,36 @@
+name: Android CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android:
+    name: Android
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/android
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "25"
+      - uses: android-actions/setup-android@v4
+      - name: Install Android platform
+        run: sdkmanager "platforms;android-37"
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Validate Android
+        run: bash ./gradlew --no-daemon lintDebug testDebugUnitTest assembleDebug

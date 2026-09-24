@@ -1,12 +1,12 @@
 # Alcance del MVP de LiftFlux
 
-- **Estado:** Aprobado
+- **Estado:** Alcance funcional conservado y plataformas reconciliadas con arquitectura v2
 - **Versión objetivo:** `1.0.0`
-- **Última actualización:** 25 de agosto de 2026
+- **Última actualización:** 23 de septiembre de 2026
 
 ## 1. Propósito
 
-LiftFlux es una aplicación móvil para organizar rutinas, registrar entrenamientos de gimnasio y consultar el progreso del usuario.
+LiftFlux incluye una aplicación Android para organizar rutinas, registrar entrenamientos y consultar el progreso, y una aplicación Windows para administrar el catálogo global.
 
 El MVP debe cerrar completamente el siguiente ciclo:
 
@@ -45,7 +45,7 @@ Puede:
 
 El administrador no podrá consultar los entrenamientos privados de los usuarios.
 
-Durante el MVP no se desarrollará un panel administrativo independiente. Las operaciones administrativas podrán realizarse mediante endpoints protegidos de la API y Swagger.
+Durante el MVP el administrador utilizará una aplicación Windows nativa para gestionar el catálogo global. Requiere rol `admin` y MFA con TOTP. Swagger queda como herramienta técnica protegida y no sustituye a esta aplicación. El administrador no accede directamente a las bases ni a datos deportivos privados.
 
 ## 3. Alcance funcional
 
@@ -69,6 +69,7 @@ Reglas:
 - Existirán los roles `user` y `admin`.
 - Las credenciales no serán almacenadas directamente por LiftFlux.
 - Los tokens de sesión se almacenarán de forma segura en el dispositivo.
+- Supabase Auth administrará contraseñas, verificación, recuperación, Google, MFA y emisión de tokens. `auth-service` conservará el rol y el estado de acceso de LiftFlux.
 
 ### 3.2 Onboarding
 
@@ -339,6 +340,19 @@ El administrador podrá:
 
 Un ejercicio utilizado en un entrenamiento no podrá eliminarse permanentemente. Se marcará como inactivo para conservar la integridad del historial.
 
+La administración se realiza desde Windows con acceso en línea. Las reglas y permisos se aplican en `catalog-service`; ocultar controles en Windows no constituye autorización.
+
+| ID | Condición de aceptación de Windows |
+| --- | --- |
+| RF-81 | Iniciar sesión, completar TOTP y verificar rol admin en el servidor; una cuenta user recibe acceso denegado. |
+| RF-82 | Listar, buscar y filtrar ejercicios globales por nombre, músculo, equipo y estado, con paginación. |
+| RF-83 | Crear y editar mediante formularios que validan campos y conservan el borrador ante errores. |
+| RF-84 | Administrar músculos y equipos con IDs estables; desactivar valores referenciados sin alterar históricos. |
+| RF-85 | Cargar, previsualizar, sustituir y retirar medios; registrar procedencia y licencia y mostrar su validación. |
+| RF-86 | Activar o desactivar con confirmación y detectar versiones obsoletas antes de sobrescribir. |
+| RF-87 | Cerrar sesión y bloquear por inactividad; una pérdida de red no se presenta como guardado confirmado. |
+| RF-88 | Instalar una distribución firmada, distinguir entorno y versión, y mostrar errores con ID de diagnóstico sin secretos. |
+
 ## 4. Reglas de negocio principales
 
 1. Cada nombre de usuario debe ser único.
@@ -377,7 +391,7 @@ Las siguientes funcionalidades quedan explícitamente fuera:
 - Sistema offline completo.
 - Panel web administrativo completo.
 - Animaciones para todo el catálogo.
-- Notificaciones distintas al temporizador.
+- Notificaciones al usuario distintas al temporizador y correos técnicos de cuenta.
 - Estadísticas y récords avanzados.
 
 Una funcionalidad incluida en esta lista necesita una nueva decisión de alcance antes de incorporarse al MVP.
@@ -403,6 +417,7 @@ También deberá cumplirse que:
 - Editar una rutina no modifique el historial.
 - Una interrupción no elimine el entrenamiento activo.
 - Los administradores puedan mantener el catálogo.
+- La administración funcione desde la aplicación Windows con rol y MFA.
 - Las validaciones automáticas estén aprobadas.
 - El flujo principal funcione en un dispositivo Android real o emulado.
 
@@ -410,8 +425,8 @@ También deberá cumplirse que:
 
 | Versión | Entregable                                           |
 | ------- | ---------------------------------------------------- |
-| `0.1.0` | Autenticación, onboarding y perfil                   |
-| `0.2.0` | Catálogo, ejercicios personalizados y administración |
+| `0.1.0` | Autenticación, onboarding, perfil, peso inicial y acceso admin con MFA |
+| `0.2.0` | Catálogo, ejercicios personalizados y administración Windows funcional |
 | `0.3.0` | Creación y gestión de rutinas                        |
 | `0.4.0` | Entrenamiento activo, persistencia y temporizador    |
 | `0.5.0` | Historial, peso corporal y estadísticas              |
@@ -427,12 +442,13 @@ El MVP podrá etiquetarse como `v1.0.0` cuando:
 - Los criterios de aceptación estén cubiertos.
 - No existan errores críticos conocidos.
 - Las pruebas unitarias y de integración relevantes estén aprobadas.
-- Flutter pase formato, análisis y pruebas.
-- NestJS pase lint, pruebas y compilación.
+- Android pase compilación, lint y pruebas aplicables.
+- Windows pase restauración, compilación y pruebas aplicables.
+- Cada servicio implementado pase lint, pruebas, compilación y migraciones aplicables.
 - Los datos de diferentes usuarios estén aislados.
 - Las sesiones activas puedan recuperarse.
 - La documentación esté actualizada.
 - La aplicación haya sido probada en Android.
-- La API se encuentre desplegada en un ambiente de prueba.
-- La base de datos tenga migraciones reproducibles.
+- Los servicios necesarios para el ciclo completo estén desplegados en un ambiente de prueba.
+- Cada base de servicio tenga migraciones reproducibles.
 - Los secretos no estén almacenados en Git.

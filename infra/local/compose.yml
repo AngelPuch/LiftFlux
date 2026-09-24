@@ -1,0 +1,19 @@
+services:
+  auth-db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: ${AUTH_DB_NAME:-liftflux_auth}
+      POSTGRES_USER: ${AUTH_DB_USER:?Set AUTH_DB_USER in infra/local/.env}
+      POSTGRES_PASSWORD: ${AUTH_DB_PASSWORD:?Set AUTH_DB_PASSWORD in infra/local/.env}
+    ports:
+      - "127.0.0.1:${AUTH_DB_PORT:-5433}:5432"
+    volumes:
+      - auth-db-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  auth-db-data:
